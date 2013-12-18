@@ -1,17 +1,17 @@
 RCP-Gifts-Through-EDD
-=====================
+====================
 
 An add-on plugin for Restrict Content Pro and Easy Digital Downloads that allows customers to purchase gift certificates (coupons) for RCP through EDD.
 
-== 1. Activate Restrict Content Pro and Easy Digital Downloads ==
+** 1. Activate Restrict Content Pro and Easy Digital Downloads **
 
 Both [Restrict Content Pro](http://pippinsplugins.com/restrict-content-pro-premium-content-plugin/) and [Easy Digital Downloads](https://easydigitaldownloads.com) are required for this plugin to function.
 
-== 2. Create an EDD Product ==
+** 2. Create an EDD Product **
 
 Membership gifts are purchased through EDD as a standard download product. Create the product and setup all standard product details (price, categories, image, etc) and then check the box at that says _Enable RCP Gift creation for this product_. With that option checked, the product will be considered a "gift".
 
-== 3. The Customer Flow ==
+** 3. The Customer Flow **
 
 Customers wishing to purchase a membership gift will purchase the EDD product created in 2. When a gift product is added to the cart, additional fields will be added to the checkout screen:
 
