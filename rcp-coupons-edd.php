@@ -73,7 +73,7 @@ class RCP_Gift_Memberships {
 		$body .= '<p>' . sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), '<a href="' . home_url() . '">' . home_url() . '</a>' ) . '</p>';
 
 		$message = edd_get_email_body_header();
-		$message .= apply_filters( 'edd_purchase_receipt_' . edd_get_option( 'email_template', 'default' ), $body );
+		$message .= edd_apply_email_template( $body, $payment_id );
 		$message .= edd_get_email_body_footer();
 
 		wp_mail( $email, $subject, $message, $headers );
