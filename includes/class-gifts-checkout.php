@@ -1,13 +1,14 @@
 <?php
 
 class RCP_Gifts_Checkout {
-		
+
 	public function __construct() {
 
 		add_action( 'edd_purchase_form_before_cc_form', array( $this, 'fields'          )        );
 		add_action( 'edd_checkout_error_checks',        array( $this, 'validate_fields' ), 10, 2 );
 		add_action( 'edd_insert_payment',               array( $this, 'store_gift_data' ), 10, 2 );
 		add_action( 'edd_complete_purchase',            array( $this, 'complete_gift'   ), 10, 2 );
+		add_action( 'edd_payment_receipt_after',        array( $this, 'receipt'         ), 10, 2 );
 
 	}
 
@@ -40,7 +41,7 @@ class RCP_Gifts_Checkout {
 			return;
 
 		foreach( $items as $key => $item ) {
-			
+
 			if( ! $rcp_gifts->is_gift_product( $item['id'] ) )
 				continue;
 
@@ -90,7 +91,7 @@ class RCP_Gifts_Checkout {
 		$gifts = $_POST[ 'edd_rcp_gift' ];
 
 		foreach( $items as $key => $item ) {
-			
+
 			if( ! $rcp_gifts->is_gift_product( $item['id'] ) )
 				continue;
 
@@ -110,7 +111,7 @@ class RCP_Gifts_Checkout {
 			}
 		}
 
-	}	
+	}
 
 	public function store_gift_data( $payment_id = 0, $payment_data = array() ) {
 
@@ -130,10 +131,10 @@ class RCP_Gifts_Checkout {
 
 		global $rcp_gifts;
 
-		if( ! get_post_meta( $payment_id, '_edd_payment_is_rcp_gift', true ) )
+		if( ! $rcp_gifts->payment_was_gift( $payment_id ) )
 			return;
 
-		$gifts = get_post_meta( $payment_id, '_edd_rcp_gift_data', true );
+		$gifts = $rcp_gifts->get_gifts_of_payment( $payment_id );
 
 		if( empty( $gifts ) )
 			return;
@@ -152,5 +153,45 @@ class RCP_Gifts_Checkout {
 			}
 		}
 
+	}
+
+	public function receipt( $payment, $receipt_args = array() ) {
+		global $rcp_gifts;
+
+		if( ! $rcp_gifts->payment_was_gift( $payment->ID ) )
+			return;
+
+		echo '<tr><td colspan="2"><strong>' . __( 'Gift Certificate Details:', 'rcp-gifts' ) . '</strong></td></tr>';
+
+		$gifts = $rcp_gifts->get_gifts_of_payment( $payment->ID );
+
+		foreach( $gifts as $gift ) :
+
+			if( ! empty( $gift['message'] ) && __( 'Enter the a message to send to the recipient', 'rcp-gifts' ) != $gift['message'] ) {
+				$message = $gift['message'];
+			} else {
+				$message = __( 'none', 'rcp-gifts' );
+			}
+			
+			$code = md5( $gift['name'] . $gift['email'] . $payment->ID );
+?>
+			<tr>
+				<td><?php _e( 'Gift Recipient Name', 'rcp-gifts' ); ?></td>
+				<td><?php echo $gift['name']; ?>
+			</tr>
+			<tr>
+				<td><?php _e( 'Gift Recipient Email', 'rcp-gifts' ); ?></td>
+				<td><?php echo $gift['email']; ?>
+			</tr>
+			<tr>
+				<td><?php _e( 'Gift Message', 'rcp-gifts' ); ?></td>
+				<td><?php echo $message; ?>
+			</tr>
+			<tr>
+				<td><?php _e( 'Redeemable code for gift:', 'rcp-gifts' ); ?></td>
+				<td><strong><?php echo $code; ?></strong></td>
+			</tr>
+<?php
+		endforeach;
 	}
 }

@@ -33,6 +33,15 @@ class RCP_Gift_Memberships {
 		return ! empty( $gift );
 	}
 
+	public function payment_was_gift( $payment_id = 0 ) {
+		$gift = get_post_meta( $payment_id, '_edd_payment_is_rcp_gift', true );
+		return ! empty( $gift );
+	}
+
+	public function get_gifts_of_payment( $payment_id = 0 ) {
+		return get_post_meta( $payment_id, '_edd_rcp_gift_data', true );
+	}
+
 	public function send_recipient_email( $name = '', $email = '', $gift_message = '', $payment_id = 0 ) {
 
 		if( ! class_exists( 'RCP_Discounts' ) )
