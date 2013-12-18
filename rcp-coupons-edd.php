@@ -77,17 +77,24 @@ class RCP_Gift_Memberships {
 
 		$db = new RCP_Discounts;
 
+		$code = md5( $name . $email . $payment_id );
+
 		$discount = array(
 			'name'           => $name,
 			'description'    => sprintf( __( 'Gifted discount for %s', 'rcp-gifts' ), $name ),
 			'amount'         => '100',
 			'status'         => 'active',
 			'unit'           => '%',
-			'code'           => md5( $name . $email . $payment_id ),
+			'code'           => $code,
 			'max_uses' 	     => 1
 		);
 
 		$discount_id = $db->insert( $discount );
+
+		$note = sprintf( __( 'Purchased as gift for %s. Coupon: %s', 'rcp-gifts' ), $name, $code );
+
+		// Store a payment note about this gift
+		edd_insert_payment_note( $payment_id, $note );
 
 	}
 
