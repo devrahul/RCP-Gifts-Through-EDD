@@ -65,17 +65,17 @@ class RCP_Gift_Memberships {
 
 		$message = edd_get_email_body_header();
 
-		$message  .= __( "Hello!\n\n", "rcp-gifts" );
-		$message .= sprintf( __( "Someone has gifted you a membership to %s\n\n", "rcp-gifts" ), $site_name );
+		$message .= '<p>' . __( "Hello!", "rcp-gifts" ) . '</p>';
+		$message .= '<p>' . sprintf( __( "Someone has gifted you a membership to %s", "rcp-gifts" ), $site_name ) . '</p>';
 		
 		if( ! empty( $gift_message ) && __( 'Enter the a message to send to the recipient', 'rcp-gifts' ) != $gift_message ) {
-			$message .= __( "The following message was included with the gift: \n\n", "rcp-gifts" );
-			$message .= $gift_message . "\n\n";
+			$message .= '<p>' . __( "The following message was included with the gift: ", "rcp-gifts" ) . '</p>';
+			$message .= '<blockquote>' . $gift_message . '</blockquote>';
 		}
 
-		$message .= sprintf( __( "Enter %s during registration to redeem your gift.\n\n", "rcp-gifts" ), $discount->code );
+		$message .= '<p>' . sprintf( __( "Enter %s during registration to redeem your gift.", "rcp-gifts" ), $discount->code ) . '</p>';
 		
-		$message .= sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), home_url() );
+		$message .= '<p>' . sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), '<a href="' . home_url() . '">' . home_url() . '</a>' ) '</p>';
 
 		$message .= edd_get_email_body_footer();
 
