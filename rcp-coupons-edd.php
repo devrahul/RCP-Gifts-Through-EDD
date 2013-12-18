@@ -47,6 +47,8 @@ class RCP_Gift_Memberships {
 		if( ! class_exists( 'RCP_Discounts' ) )
 			return false;
 
+		global $edd_options;
+
 		$db = new RCP_Discounts;
 
 		$site_name = get_bloginfo( 'name' );
@@ -54,7 +56,16 @@ class RCP_Gift_Memberships {
 
 		$subject = sprintf( __( 'Gift Certificate to %s', 'rcp-gifts' ), $site_name );
 
-		$message  = __( "Hello!\n\n", "rcp-gifts" );
+		$from_name = isset( $edd_options['from_name'] ) ? $edd_options['from_name'] : get_bloginfo('name');
+		$from_email = isset( $edd_options['from_email'] ) ? $edd_options['from_email'] : get_option('admin_email');
+
+		$headers = "From: " . stripslashes_deep( html_entity_decode( $from_name, ENT_COMPAT, 'UTF-8' ) ) . " <$from_email>\r\n";
+		$headers .= "Reply-To: ". $from_email . "\r\n";
+		$headers .= "Content-Type: text/html; charset=utf-8\r\n";
+
+		$message = edd_get_email_body_header();
+
+		$message  .= __( "Hello!\n\n", "rcp-gifts" );
 		$message .= sprintf( __( "Someone has gifted you a membership to %s\n\n", "rcp-gifts" ), $site_name );
 		
 		if( ! empty( $gift_message ) && __( 'Enter the a message to send to the recipient', 'rcp-gifts' ) != $gift_message ) {
@@ -66,7 +77,9 @@ class RCP_Gift_Memberships {
 		
 		$message .= sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), home_url() );
 
-		wp_mail( $email, $subject, $message );
+		$message .= edd_get_email_body_footer();
+
+		wp_mail( $email, $subject, $message, $headers );
 
 	}
 
