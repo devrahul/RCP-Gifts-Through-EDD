@@ -75,7 +75,7 @@ class RCP_Gift_Memberships {
 
 		$message .= '<p>' . sprintf( __( "Enter %s during registration to redeem your gift.", "rcp-gifts" ), $discount->code ) . '</p>';
 		
-		$message .= '<p>' . sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), '<a href="' . home_url() . '">' . home_url() . '</a>' ) '</p>';
+		$message .= '<p>' . sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), '<a href="' . home_url() . '">' . home_url() . '</a>' ) . '</p>';
 
 		$message .= edd_get_email_body_footer();
 
