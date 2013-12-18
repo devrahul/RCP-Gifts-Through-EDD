@@ -63,8 +63,6 @@ class RCP_Gift_Memberships {
 		$headers .= "Reply-To: ". $from_email . "\r\n";
 		$headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
-		$message = edd_get_email_body_header();
-
 		$body = '<p>' . __( "Hello!", "rcp-gifts" ) . '</p>';
 		$body .= '<p>' . sprintf( __( "Someone has gifted you a membership to %s", "rcp-gifts" ), $site_name ) . '</p>';
 		if( ! empty( $gift_message ) && __( 'Enter the a message to send to the recipient', 'rcp-gifts' ) != $gift_message ) {
@@ -74,8 +72,8 @@ class RCP_Gift_Memberships {
 		$body .= '<p>' . sprintf( __( "Enter %s during registration to redeem your gift.", "rcp-gifts" ), $discount->code ) . '</p>';
 		$body .= '<p>' . sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), '<a href="' . home_url() . '">' . home_url() . '</a>' ) . '</p>';
 
-		$body = apply_filters( 'edd_purchase_receipt_' . edd_get_option( 'email_template', 'default' ), $body );
-
+		$message = edd_get_email_body_header();
+		$message .= apply_filters( 'edd_purchase_receipt_' . edd_get_option( 'email_template', 'default' ), $body );
 		$message .= edd_get_email_body_footer();
 
 		wp_mail( $email, $subject, $message, $headers );
