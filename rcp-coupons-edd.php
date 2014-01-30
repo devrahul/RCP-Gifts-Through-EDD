@@ -33,6 +33,11 @@ class RCP_Gift_Memberships {
 		return ! empty( $gift );
 	}
 
+	public function is_gift_multiuse( $download_id = 0 ) {
+		$gift = get_post_meta( $download_id, '_rcp_gift_multiuse', true );
+		return ! empty( $gift );
+	}
+
 	public function payment_was_gift( $payment_id = 0 ) {
 		$gift = get_post_meta( $payment_id, '_edd_payment_is_rcp_gift', true );
 		return ! empty( $gift );
@@ -88,6 +93,7 @@ class RCP_Gift_Memberships {
 		$db = new RCP_Discounts;
 
 		$code = md5( $name . $email . $payment_id );
+		$multiuse = get_post_meta($download_id,'_rcp_gift_multiuse', true) ? 9999 : 1;
 
 		$discount = array(
 			'name'           => $name,
@@ -96,7 +102,7 @@ class RCP_Gift_Memberships {
 			'status'         => 'active',
 			'unit'           => '%',
 			'code'           => $code,
-			'max_uses' 	     => 1
+			'max_uses' 	     => $multiuse
 		);
 
 		$discount_id = $db->insert( $discount );
