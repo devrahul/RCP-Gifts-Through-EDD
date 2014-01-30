@@ -98,8 +98,8 @@ class RCP_Gift_Memberships {
 		$db = new RCP_Discounts;
 
 		$code = md5( $name . $email . $payment_id );
-		$multiuse = get_post_meta($download_id,'_rcp_gift_multiuse', true) ? 9999 : 1;
-		$expires = get_post_meta($download_id,'_rcp_gift_expires') ? get_post_meta($download_id,'_rcp_gift_expires') : false;
+		$multiuse = get_post_meta($download_id,'_rcp_gift_multiuse', true) ? 0 : 1;
+		$expires = $this->gift_expires($download_id);
 
 		$discount = array(
 			'name'           => $name,
