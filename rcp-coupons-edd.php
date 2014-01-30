@@ -40,15 +40,27 @@ class RCP_Gift_Memberships {
 		$args 	= array( 'post_type' => 'download', 'meta_key' => '_rcp_gift_product' );
 		$gifts  = get_posts( $args );
 
-		if ( $this->is_gift_product() ){
-
-			foreach ( $codes as $key => $code ) {
-
-				echo $code->code;
-			}
-
+		if ( isset( $_GET['rcp-action'] ) && $_GET['rcp-action'] == 'edit_discount' ) {
+			require_once dirname( __FILE__ ) . '/includes/edit-discount.php';
+		} elseif ( isset( $_GET['rcp-action'] ) && $_GET['rcp-action'] == 'add_discount' ) {
+			require_once dirname( __FILE__ ) . '/includes/add-discount.php';
 		}
 
+		?>
+		<div class="wrap">
+			<h2><?php _e( 'Gift Discount Codes', 'edd' ); ?><a href="<?php echo add_query_arg( array( 'rcp-action' => 'add_discount' ) ); ?>" class="add-new-h2">Add New</a></h2>
+			<?php
+				if ( $this->is_gift_product() ){
+
+					foreach ( $codes as $key => $code ) {
+
+						echo $code->code;
+					}
+
+				}
+			?>
+		</div>
+	<?php
 	}
 
 	public function is_gift_product( $download_id = 0 ) {
