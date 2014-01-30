@@ -16,6 +16,8 @@ class RCP_Gift_Memberships {
 
 		$this->includes();
 
+		add_action('admin_menu', array($this,'menu_page'),20);
+
 	}
 
 	public function includes() {
@@ -25,6 +27,27 @@ class RCP_Gift_Memberships {
 
 		$this->admin    = new RCP_Gifts_Admin;
 		$this->checkout = new RCP_Gifts_Checkout;
+
+	}
+
+	public function menu_page(){
+		add_submenu_page( 'edit.php?post_type=download', __( 'Gift Codes', 'rcp' ), __( 'RCP Gift Codes', 'rcp' ),'manage_options', 'rcp-gifts', array($this,'draw_page') );
+	}
+
+	public function draw_page(){
+
+		$codes 	= rcp_get_discounts();
+		$args 	= array( 'post_type' => 'download', 'meta_key' => '_rcp_gift_product' );
+		$gifts  = get_posts( $args );
+
+		if ( $this->is_gift_product() ){
+
+			foreach ( $codes as $key => $code ) {
+
+				echo $code->code;
+			}
+
+		}
 
 	}
 
