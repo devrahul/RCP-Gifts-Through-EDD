@@ -57,7 +57,7 @@ class RCP_Gift_Memberships {
 
 				$discounts 		= $wpdb->query( "SELECT FROM $wpdb->postmeta AS pm INNER JOIN rcp_discounts AS rd ON pm.meta_value = rd.id WHERE pm.meta_key='_edd_rcp_gift_id'");
 
-				var_dump($discounts);
+				var_dump($discount_ids);
 
 			?>
 		</div>
