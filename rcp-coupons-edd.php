@@ -53,11 +53,11 @@ class RCP_Gift_Memberships {
 
 				// get all discounts ids
 				$getdiscountids = $wpdb->query( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_edd_rcp_gift_id';" );
-				$discount_ids = implode( ',', array($getdiscountids) );
+				$discount_ids 	= implode( ',', array($getdiscountids) );
 
-				$discounts = $wpdb->query( "SELECT FROM $wpdb->postmeta AS pm INNER JOIN rcp_discounts AS rd ON pm.meta_value = rd.id WHERE pm.meta_key='_edd_rcp_gift_id'");
+				$discounts 		= $wpdb->query( "SELECT FROM $wpdb->postmeta AS pm INNER JOIN rcp_discounts AS rd ON pm.meta_value = rd.id WHERE pm.meta_key='_edd_rcp_gift_id'");
 
-				var_dump($discount_ids);
+				var_dump($discounts);
 
 			?>
 		</div>
