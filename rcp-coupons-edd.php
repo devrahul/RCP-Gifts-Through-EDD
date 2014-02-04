@@ -31,33 +31,34 @@ class RCP_Gift_Memberships {
 	}
 
 	public function menu_page(){
-		add_submenu_page( 'edit.php?post_type=download', __( 'Gift Codes', 'rcp' ), __( 'RCP Gift Codes', 'rcp' ),'manage_options', 'rcp-gifts', array($this,'draw_page') );
+		add_submenu_page( 'rcp-members', __( 'Gifts', 'rcp' ), __( 'Gifts', 'rcp' ),'manage_options', 'rcp-gifts', array($this,'draw_page') );
 	}
 
 	public function draw_page(){
+
+		global $wpdb;
 
 		$codes 	= rcp_get_discounts();
 		$args 	= array( 'post_type' => 'download', 'meta_key' => '_rcp_gift_product' );
 		$gifts  = get_posts( $args );
 
-		if ( isset( $_GET['rcp-action'] ) && $_GET['rcp-action'] == 'edit_discount' ) {
-			require_once dirname( __FILE__ ) . '/includes/edit-discount.php';
-		} elseif ( isset( $_GET['rcp-action'] ) && $_GET['rcp-action'] == 'add_discount' ) {
+		if ( isset( $_GET['rcp-action'] ) && $_GET['rcp-action'] == 'add_discount' ) {
 			require_once dirname( __FILE__ ) . '/includes/add-discount.php';
 		}
 
 		?>
 		<div class="wrap">
-			<h2><?php _e( 'Gift Discount Codes', 'edd' ); ?><a href="<?php echo add_query_arg( array( 'rcp-action' => 'add_discount' ) ); ?>" class="add-new-h2">Add New</a></h2>
+			<h2><?php _e( 'Gifts', 'edd' ); ?><a href="<?php echo add_query_arg( array( 'rcp-action' => 'add_discount' ) ); ?>" class="add-new-h2">Add New</a></h2>
 			<?php
-				if ( $this->is_gift_product() ){
 
-					foreach ( $codes as $key => $code ) {
+				// get all discounts ids
+				$getdiscountids = $wpdb->query( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_edd_rcp_gift_id';" );
+				$discount_ids = implode( ',', $getdiscountids );
 
-						echo $code->code;
-					}
+				$discounts = $wpdb->query( "SELECT FROM $wpdb->postmeta AS pm INNER JOIN rcp_discounts AS rd ON pm.meta_value = rd.id WHERE pm.meta_key='_edd_rcp_gift_id'");
 
-				}
+				var_dump($discount_ids);
+
 			?>
 		</div>
 	<?php
@@ -153,6 +154,10 @@ class RCP_Gift_Memberships {
 
 		// Store a payment note about this gift
 		edd_insert_payment_note( $payment_id, $note );
+
+		// store discount id
+		add_post_meta( $payment_id, '_edd_rcp_gift_id', $discount_id , true );
+
 
 	}
 
