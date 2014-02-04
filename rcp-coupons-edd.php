@@ -52,12 +52,12 @@ class RCP_Gift_Memberships {
 			<?php
 
 				// get all discounts ids
-				$getdiscountids = $wpdb->query( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_edd_rcp_gift_id';" );
-				$discount_ids 	= implode( ',', array($getdiscountids) );
+				$getdiscountids = $wpdb->get_col( "SELECT meta_id FROM $wpdb->postmeta WHERE meta_key = '_edd_rcp_gift_id';" );
+				$discount_ids 	= implode( ',', $getdiscountids );
 
-				$discounts 		= $wpdb->query( "SELECT FROM $wpdb->postmeta AS pm INNER JOIN rcp_discounts AS rd ON pm.meta_value = rd.id WHERE pm.meta_key='_edd_rcp_gift_id'");
-
-				var_dump($discount_ids);
+				$discounts = $wpdb->query( "SELECT FROM rcp_discounts WHERE id IN(".$discount_ids.");" );
+				
+				var_dump($discounts);
 
 			?>
 		</div>
@@ -156,9 +156,7 @@ class RCP_Gift_Memberships {
 		edd_insert_payment_note( $payment_id, $note );
 
 		// store discount ids for each gifted product
-		foreach( $codes as $key => $code ) {
-			add_post_meta( $payment_id, '_edd_rcp_gift_id', $code->id, true );
-		}
+		add_post_meta( $payment_id, '_edd_rcp_gift_id', $discount_id, true );
 
 
 	}
