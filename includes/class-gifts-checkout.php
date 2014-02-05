@@ -124,12 +124,6 @@ class RCP_Gifts_Checkout {
 
 		update_post_meta( $payment_id, '_edd_payment_is_rcp_gift', '1' );
 		update_post_meta( $payment_id, '_edd_rcp_gift_data', $gifts );
-
-		foreach( $codes as $key => $code ) {
-
-			add_post_meta( $payment_id, '_edd_rcp_gift_id', $code->code, true );
-		}
-
 	}
 
 	public function complete_gift( $payment_id = 0 ) {
