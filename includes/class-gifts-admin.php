@@ -45,6 +45,8 @@ class RCP_Gifts_Admin {
 		        echo '<label for="' . $level->id . '_' . $level->id . '">' . $level->name . '</label><br/>';
             }
 		echo '</p>';
+
+		var_dump($meta);
 	}
 
 	public function save_fields( $fields = array() ) {

@@ -64,6 +64,8 @@ class RCP_Gift_Products {
 				<tbody>
 
 				<?php
+				echo '<pre>';
+				var_dump($discounts);
 				if($discounts) :
 					$i = 1;
 					foreach( $discounts as $key => $discount) : ?>
