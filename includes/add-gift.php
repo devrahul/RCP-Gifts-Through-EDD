@@ -11,7 +11,7 @@
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
-$downloads = get_posts( array( 'post_type' => 'download', 'nopaging' => true ) );
+
 ?>
 <h2><?php _e( 'Add New Gift', 'edd' ); ?> - <a href="<?php echo admin_url( 'admin.php?page=rcp-gifts' ); ?>" class="button-secondary"><?php _e( 'Go Back', 'edd' ); ?></a></h2>
 <form id="rcp-add-gift" action="" method="POST">
