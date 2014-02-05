@@ -13,9 +13,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 $downloads = get_posts( array( 'post_type' => 'download', 'nopaging' => true ) );
 ?>
-<h2><?php _e( 'Add New Discount', 'edd' ); ?> - <a href="<?php echo admin_url( 'edit.php?post_type=download&page=rcp-gifts' ); ?>" class="button-secondary"><?php _e( 'Go Back', 'edd' ); ?></a></h2>
-<form id="edd-add-discount" action="" method="POST">
-	<?php do_action( 'edd_add_discount_form_top' ); ?>
+<h2><?php _e( 'Add New Gift', 'edd' ); ?> - <a href="<?php echo admin_url( 'admin.php?page=rcp-gifts' ); ?>" class="button-secondary"><?php _e( 'Go Back', 'edd' ); ?></a></h2>
+<form id="rcp-add-gift" action="" method="POST">
 	<table class="form-table">
 		<tbody>
 			<tr class="form-field">
@@ -79,11 +78,10 @@ $downloads = get_posts( array( 'post_type' => 'download', 'nopaging' => true ) )
 			</tr>
 		</tbody>
 	</table>
-	<?php do_action( 'edd_add_discount_form_bottom' ); ?>
 	<p class="submit">
-		<input type="hidden" name="edd-action" value="add_discount"/>
-		<input type="hidden" name="edd-redirect" value="<?php echo esc_url( admin_url( 'edit.php?post_type=download&page=rcp-gifts' ) ); ?>"/>
+		<input type="hidden" name="edd-action" value="add_gift"/>
+		<input type="hidden" name="edd-redirect" value="<?php echo esc_url( admin_url( 'admin.php?page=rcp-gifts' ) ); ?>"/>
 		<input type="hidden" name="edd-discount-nonce" value="<?php echo wp_create_nonce( 'edd_discount_nonce' ); ?>"/>
-		<input type="submit" value="<?php _e( 'Add Discount Code', 'edd' ); ?>" class="button-primary"/>
+		<input type="submit" value="<?php _e( 'Add Gift Code', 'edd' ); ?>" class="button-primary"/>
 	</p>
 </form>
