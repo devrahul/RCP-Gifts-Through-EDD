@@ -97,7 +97,7 @@ class RCP_Gift_Memberships {
 
 	}
 
-	public function create_discount( $name = '', $email = '', $payment_id = 0 ) {
+	public function create_discount( $name = '', $email = '', $payment_id = 0, $download_id = 0 ) {
 
 		if( ! class_exists( 'RCP_Discounts' ) )
 			return false;

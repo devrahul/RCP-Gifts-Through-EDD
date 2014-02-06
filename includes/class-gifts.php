@@ -24,6 +24,8 @@ class RCP_Gift_Products {
 				$discount_ids 	= implode( ',',$getdiscountids);
 				$discounts 		= $wpdb->get_results( "SELECT * FROM rcp_discounts WHERE id IN(".$discount_ids.");");
 
+				echo '<pre>';
+				var_dump($discounts);
 
 			?>
 			<h2><?php _e( 'RCP Gifts', 'rcp-gifts' ); ?></h2>
@@ -65,7 +67,6 @@ class RCP_Gift_Products {
 
 				<?php
 				echo '<pre>';
-				var_dump($discounts);
 				if($discounts) :
 					$i = 1;
 					foreach( $discounts as $key => $discount) : ?>
@@ -76,10 +77,14 @@ class RCP_Gift_Products {
 							<td><?php echo $discount->code; ?></td>
 							<td>
 								<?php
+
 								if ( $discount->subscription_id > 0 ) {
 									echo rcp_get_subscription_name( $discount->subscription_id );
+
 								} else {
 									echo __( 'All Levels', 'rcp-gifts' );
+
+
 								}
 								?>
 							</td>

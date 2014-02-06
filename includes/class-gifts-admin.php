@@ -41,12 +41,12 @@ class RCP_Gifts_Admin {
 		echo '<p>';	
 
             foreach ( $levels as $level ) {
-				echo '<input type="checkbox" value="' . $level->id . '"' . checked( true, in_array( $level->id, $selected ), false ) . ' name="_rcp_gift_subscription_level" id="' . $level->id . '_' . $level->id . '" />&nbsp;';
+				echo '<input type="checkbox" value="' . $level->id . '"' . checked( true, in_array( $level->id, $selected ), false ) . ' name="_rcp_gift_subscription_level" id="' . $level->id . '" />&nbsp;';
 		        echo '<label for="' . $level->id . '_' . $level->id . '">' . $level->name . '</label><br/>';
+
+		        echo '<pre>';
             }
 		echo '</p>';
-
-		var_dump($meta);
 	}
 
 	public function save_fields( $fields = array() ) {
