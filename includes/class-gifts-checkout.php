@@ -145,7 +145,7 @@ class RCP_Gifts_Checkout {
 			$message = ! empty( $gift['message'] ) ? $gift['message'] : '';
 			$send    = isset( $gift['send'] );
 
-			$rcp_gifts->create_discount( $name, $email, $payment_id );
+			$rcp_gifts->create_discount( $name, $email, $payment_id , $download_id );
 
 			if( $send ) {
 				$rcp_gifts->send_recipient_email( $name, $email, $message, $payment_id );

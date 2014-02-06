@@ -16,7 +16,7 @@ class RCP_Gifts_Admin {
 		$is_multiuse 	= $rcp_gifts->is_gift_multiuse( $post_id );
 		$expires 		= $rcp_gifts->gift_expires( $post_id );
 
-		$meta 			= get_post_meta( $post_id, '_rcp_gift_subscription_level', true );
+		$meta 			= $rcp_gifts->gift_subscription_level( $post_id );
 		$levels 		= rcp_get_subscription_levels( 'all' );
 		$selected 		= is_array( $meta ) ? $meta : array( $meta );
 
