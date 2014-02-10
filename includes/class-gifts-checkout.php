@@ -126,7 +126,7 @@ class RCP_Gifts_Checkout {
 		update_post_meta( $payment_id, '_edd_rcp_gift_data', $gifts );
 	}
 
-	public function complete_gift( $payment_id = 0 ) {
+	public function complete_gift( $payment_id = 0, $download_id = 0 ) {
 
 		global $rcp_gifts;
 

@@ -24,9 +24,6 @@ class RCP_Gift_Products {
 				$discount_ids 	= implode( ',',$getdiscountids);
 				$discounts 		= $wpdb->get_results( "SELECT * FROM rcp_discounts WHERE id IN(".$discount_ids.");");
 
-				echo '<pre>';
-				var_dump($discounts);
-
 			?>
 			<h2><?php _e( 'RCP Gifts', 'rcp-gifts' ); ?></h2>
 
