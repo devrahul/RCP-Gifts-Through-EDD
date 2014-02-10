@@ -10,6 +10,8 @@ class RCP_Gift_Memberships {
 
 	private $admin;
 
+	private $gifts;
+
 	private $checkout;
 
 	public function __construct() {
@@ -27,6 +29,7 @@ class RCP_Gift_Memberships {
 		include dirname( __FILE__ ) . '/includes/class-gifts-checkout.php';
 
 		$this->admin    = new RCP_Gifts_Admin;
+		$this->gifts    = new RCP_Gift_Products;
 		$this->checkout = new RCP_Gifts_Checkout;
 
 	}

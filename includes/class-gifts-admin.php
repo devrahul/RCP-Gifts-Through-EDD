@@ -33,7 +33,7 @@ class RCP_Gifts_Admin {
 		echo '</p>';
 		// set expiration date
 		echo '<p>';	
-			echo '<input type="date" name="_rcp_gift_expires" id="_rcp_gift_expires"/>';
+			echo '<input type="date" name="_rcp_gift_expires" id="_rcp_gift_expires" value="1"' . checked( true, $expires, false ) . ' />';
 			echo '<label for="_rcp_gift_expires">' . __( 'Select optional expiration date.', 'rcp-gifts' ) . '</label>';
 		echo '</p>';
 		// choose subscription level
