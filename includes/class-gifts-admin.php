@@ -6,8 +6,8 @@ class RCP_Gifts_Admin {
 
 		add_action( 'edd_meta_box_fields',     array( $this, 'metabox'     ), 999 );
 		add_filter( 'edd_metabox_fields_save', array( $this, 'save_fields' )      );
-
 	}
+
 
 	public function metabox( $post_id = 0 ) {
 		global $rcp_gifts;
@@ -33,10 +33,11 @@ class RCP_Gifts_Admin {
 		echo '</p>';
 		// set expiration date
 		echo '<p>';	
-			echo '<input type="date" name="_rcp_gift_expires" id="_rcp_gift_expires" value="1"' . checked( true, $expires, false ) . ' />';
+			echo '<input type="date" class="datepicker" name="_rcp_gift_expires" id="_rcp_gift_expires" value="1" ' . checked( true, $expires, false ) . '>';
 			echo '<label for="_rcp_gift_expires">' . __( 'Select optional expiration date.', 'rcp-gifts' ) . '</label>';
 		echo '</p>';
 		// choose subscription level
+
 		echo '<p>';
 			echo '<select name="_rcp_gift_subscription_level" id="_rcp_gift_subscription_level"/>&nbsp;';
 	            foreach ( $levels as $level ) {
@@ -47,6 +48,8 @@ class RCP_Gifts_Admin {
             echo '</select>';
 
 		echo '</p>';
+
+
 	}
 
 	public function save_fields( $fields = array() ) {

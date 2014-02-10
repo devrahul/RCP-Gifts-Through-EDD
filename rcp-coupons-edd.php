@@ -50,8 +50,7 @@ class RCP_Gift_Memberships {
 	}
 
 	public function gift_expires( $download_id = 0 ) {
-		$gift = get_post_meta( $download_id, '_rcp_gift_expires', true );
-		return ! empty( $gift );
+		return get_post_meta( $download_id, '_rcp_gift_expires', true );
 	}
 
 	public function payment_was_gift( $payment_id = 0 ) {
