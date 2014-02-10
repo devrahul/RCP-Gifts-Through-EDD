@@ -16,8 +16,8 @@ class RCP_Gifts_Admin {
 		$is_multiuse 	= $rcp_gifts->is_gift_multiuse( $post_id );
 		$expires 		= $rcp_gifts->gift_expires( $post_id );
 
-		$meta 			= $rcp_gifts->gift_subscription_level( $post_id );
-		$levels 		= rcp_get_subscription_levels();
+		$gift_level      = $rcp_gifts->gift_subscription_level( $post_id );
+		$levels 		 = rcp_get_subscription_levels();
 
 		echo '<p>';
 			echo '<strong>' . __( 'Gift Creation', 'rcp-gifts' ) . '</strong><br/>';
@@ -41,7 +41,7 @@ class RCP_Gifts_Admin {
 			echo '<select name="_rcp_gift_subscription_level" id="_rcp_gift_subscription_level"/>&nbsp;';
 	            foreach ( $levels as $level ) {
 
-			       echo '<option value="'.$level->id.'" ', $meta == $level->id ? ' selected="selected"' : '', '>', $level->name, '</option>';
+			       echo '<option value="' . $level->id . '"' . selected( $gift_level, $level->id, false ) . '>', $level->name, '</option>';
 	            }
 
             echo '</select>';
