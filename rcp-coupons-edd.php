@@ -27,14 +27,13 @@ class RCP_Gift_Memberships {
 		include dirname( __FILE__ ) . '/includes/class-gifts-checkout.php';
 
 		$this->admin    = new RCP_Gifts_Admin;
-		$this->admin    = new RCP_Gift_Products;
 		$this->checkout = new RCP_Gifts_Checkout;
 
 	}
 
 	public function gift_subscription_level( $download_id = 0 ) {
-		$gift = get_post_meta( $download_id, '_rcp_gift_subscription_level', true );
-		return ! empty( $gift );
+		return get_post_meta( $download_id, '_rcp_gift_subscription_level', true );
+
 	}
 
 	public function is_gift_product( $download_id = 0 ) {

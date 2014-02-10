@@ -17,8 +17,7 @@ class RCP_Gifts_Admin {
 		$expires 		= $rcp_gifts->gift_expires( $post_id );
 
 		$meta 			= $rcp_gifts->gift_subscription_level( $post_id );
-		$levels 		= rcp_get_subscription_levels( 'all' );
-		$selected 		= is_array( $meta ) ? $meta : array( $meta );
+		$levels 		= rcp_get_subscription_levels();
 
 		echo '<p>';
 			echo '<strong>' . __( 'Gift Creation', 'rcp-gifts' ) . '</strong><br/>';
@@ -38,14 +37,15 @@ class RCP_Gifts_Admin {
 			echo '<label for="_rcp_gift_expires">' . __( 'Select optional expiration date.', 'rcp-gifts' ) . '</label>';
 		echo '</p>';
 		// choose subscription level
-		echo '<p>';	
+		echo '<p>';
+			echo '<select name="_rcp_gift_subscription_level" id="_rcp_gift_subscription_level"/>&nbsp;';
+	            foreach ( $levels as $level ) {
 
-            foreach ( $levels as $level ) {
-				echo '<input type="checkbox" value="' . $level->id . '"' . checked( true, in_array( $level->id, $selected ), false ) . ' name="_rcp_gift_subscription_level" id="' . $level->id . '" />&nbsp;';
-		        echo '<label for="' . $level->id . '_' . $level->id . '">' . $level->name . '</label><br/>';
+			       echo '<option value="'.$level->id.'" ', $meta == $level->id ? ' selected="selected"' : '', '>', $level->name, '</option>';
+	            }
 
-		        echo '<pre>';
-            }
+            echo '</select>';
+
 		echo '</p>';
 	}
 
