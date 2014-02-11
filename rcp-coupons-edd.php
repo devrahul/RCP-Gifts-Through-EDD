@@ -126,7 +126,6 @@ class RCP_Gift_Memberships {
 
 		$discount_id = $db->insert( $discount );
 
-		//var_dump($sublevel);wp_die();
 
 		$note = sprintf( __( 'Purchased as gift for %s. Coupon: %s', 'rcp-gifts' ), $name, $code );
 
