@@ -107,25 +107,24 @@ class RCP_Gift_Memberships {
 
 		$db = new RCP_Discounts;
 
-		$code 		= md5( $name . $email . $payment_id );
-		$multiuse 	= $this->is_gift_multiuse($download_id) ? 0 : 1;
-		$expires 	= $this->gift_expires($download_id);
-		$sublevel   = $this->gift_subscription_level($download_id);
+		$code     = md5( $name . $email . $payment_id );
+		$multiuse = $this->is_gift_multiuse($download_id) ? 0 : 1;
+		$expires  = $this->gift_expires($download_id);
+		$sublevel = $this->gift_subscription_level($download_id);
 
 		$discount = array(
-			'name'           	=> $name,
-			'description'    	=> sprintf( __( 'Gifted discount for %s', 'rcp-gifts' ), $name ),
-			'amount'         	=> '100',
-			'status'         	=> 'active',
-			'unit'           	=> '%',
-			'code'           	=> $code,
-			'max_uses' 	     	=> $multiuse,
-			'expiration'	 	=> $expires,
-			'subscription_id' 	=> $sublevel
+			'name'            => $name,
+			'description'     => sprintf( __( 'Gifted discount for %s', 'rcp-gifts' ), $name ),
+			'amount'          => '100',
+			'status'          => 'active',
+			'unit'            => '%',
+			'code'            => $code,
+			'max_uses' 	      => $multiuse,
+			'expiration'	  => $expires,
+			'subscription_id' => $sublevel
 		);
 
 		$discount_id = $db->insert( $discount );
-
 
 		$note = sprintf( __( 'Purchased as gift for %s. Coupon: %s', 'rcp-gifts' ), $name, $code );
 
@@ -134,7 +133,6 @@ class RCP_Gift_Memberships {
 
 		// store discount ids for each gifted product
 		add_post_meta( $payment_id, '_edd_rcp_gift_id', $discount_id, true );
-
 
 	}
 

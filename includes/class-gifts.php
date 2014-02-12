@@ -2,30 +2,30 @@
 
 class RCP_Gift_Products {
 
-	public function __construct(){
-		add_action('admin_menu', array($this,'menu_page'),20);
+	public function __construct() {
+		add_action( 'admin_menu', array( $this,'menu_page' ), 20 );
 	}
 
-	public function menu_page(){
-		add_submenu_page( 'rcp-members', __( 'Gifts', 'rcp-gifts' ), __( 'Gifts', 'rcp-gifts' ),'manage_options', 'rcp-gifts', array($this,'draw_page') );
+	public function menu_page() {
+		add_submenu_page( 'rcp-members', __( 'Gifts', 'rcp-gifts' ), __( 'Gifts', 'rcp-gifts' ),'manage_options', 'rcp-gifts', array( $this,'draw_page' ) );
 	}
 
-	public function draw_page(){
+	public function draw_page() {
 
 		global $wpdb;
 		$page = admin_url( '/admin.php?page=rcp-gifts' );
-
 		?>
 		<div class="wrap">
 			<?php
 
 				// get all discounts ids
-				$getdiscountids = $wpdb->get_col( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_edd_rcp_gift_id';");
-				$discount_ids 	= implode( ',',$getdiscountids);
-				$discounts 		= $wpdb->get_results( "SELECT * FROM rcp_discounts WHERE id IN(".$discount_ids.");");
+				$discounts_db = rcp_get_discounts_db_name();
+				$discount_ids = $wpdb->get_col( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_edd_rcp_gift_id';" );
+				$discount_ids = implode( ',', $discount_ids );
+				$discounts    = $wpdb->get_results( "SELECT * FROM $discounts_db WHERE id IN (" . $discount_ids . ");" );
 
 			?>
-			<h2><?php _e( 'RCP Gifts', 'rcp-gifts' ); ?></h2>
+			<h2><?php _e( 'Restrict Content Pro Gifts', 'rcp-gifts' ); ?></h2>
 
 			<table class="wp-list-table widefat fixed posts">
 				<thead>
@@ -63,8 +63,7 @@ class RCP_Gift_Products {
 				<tbody>
 
 				<?php
-				echo '<pre>';
-				if($discounts) :
+				if( $discounts ) :
 					$i = 1;
 					foreach( $discounts as $key => $discount) : ?>
 						<tr class="rcp_row <?php if( rcp_is_odd( $i ) ) { echo 'alternate'; } ?>">
@@ -77,11 +76,8 @@ class RCP_Gift_Products {
 
 								if ( $discount->subscription_id > 0 ) {
 									echo rcp_get_subscription_name( $discount->subscription_id );
-
 								} else {
 									echo __( 'All Levels', 'rcp-gifts' );
-
-
 								}
 								?>
 							</td>

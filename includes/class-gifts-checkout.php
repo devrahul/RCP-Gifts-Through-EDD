@@ -88,7 +88,6 @@ class RCP_Gifts_Checkout {
 			return;
 
 		$items = edd_get_cart_contents();
-
 		$gifts = $_POST[ 'edd_rcp_gift' ];
 
 		foreach( $items as $key => $item ) {
@@ -97,7 +96,7 @@ class RCP_Gifts_Checkout {
 				continue;
 
 			$email = $gifts[ $key ][ 'email' ] ? sanitize_text_field( $gifts[ $key ][ 'email' ] ) : false;
-			$name  = $gifts[ $key ][ 'name' ] ? sanitize_text_field( $gifts[ $key ][ 'name' ] ) : false;
+			$name  = $gifts[ $key ][ 'name' ]  ? sanitize_text_field( $gifts[ $key ][ 'name' ] )  : false;
 
 			if( empty( $email ) ) {
 				edd_set_error( 'empty_gift_email_' . $key, __( 'Please enter an email address for the gift recipient', 'rcp-gifts' ) );
@@ -142,8 +141,8 @@ class RCP_Gifts_Checkout {
 		foreach( $gifts as $gift ) {
 
 			$download_id = absint( $gift['download_id'] );
-			$name        = $gift['name'];
-			$email       = $gift['email'];
+			$name        = sanitize_text_field( $gift['name'] );
+			$email       = sanitize_text_field( $gift['email'] );
 			$message     = ! empty( $gift['message'] ) ? $gift['message'] : '';
 			$send        = isset( $gift['send'] );
 
