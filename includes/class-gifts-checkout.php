@@ -46,6 +46,7 @@ class RCP_Gifts_Checkout {
 				continue;
 
 			echo '<fieldset class="rcp_gift_recipient_fields">';
+				echo '<input type="hidden" name="edd_rcp_gift[' . $key . '][download_id]" id="edd_rcp_gift[' . $key . '][download_id]" value="' . $item['id'] . '"/>';
 				echo '<p class="rcp_gift_recipient_email_wrap">';
 					echo '<label for="edd_rcp_gift[' . $key . '][name]">';
 						echo __( 'Gift Recipient\'s Name', 'rcp-gifts' );
@@ -118,13 +119,12 @@ class RCP_Gifts_Checkout {
 		if( ! $this->cart_has_gift_product() )
 			return;
 
-		$items = edd_get_cart_contents();
+		$codes = rcp_get_discounts();
 
 		$gifts = $_POST[ 'edd_rcp_gift' ];
 
 		update_post_meta( $payment_id, '_edd_payment_is_rcp_gift', '1' );
 		update_post_meta( $payment_id, '_edd_rcp_gift_data', $gifts );
-
 	}
 
 	public function complete_gift( $payment_id = 0 ) {
@@ -141,12 +141,13 @@ class RCP_Gifts_Checkout {
 
 		foreach( $gifts as $gift ) {
 
-			$name    = $gift['name'];
-			$email   = $gift['email'];
-			$message = ! empty( $gift['message'] ) ? $gift['message'] : '';
-			$send    = isset( $gift['send'] );
+			$download_id = absint( $gift['download_id'] );
+			$name        = $gift['name'];
+			$email       = $gift['email'];
+			$message     = ! empty( $gift['message'] ) ? $gift['message'] : '';
+			$send        = isset( $gift['send'] );
 
-			$rcp_gifts->create_discount( $name, $email, $payment_id );
+			$rcp_gifts->create_discount( $name, $email, $payment_id, $download_id );
 
 			if( $send ) {
 				$rcp_gifts->send_recipient_email( $name, $email, $message, $payment_id );
