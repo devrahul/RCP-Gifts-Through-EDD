@@ -79,10 +79,6 @@ class RCP_Gift_Memberships {
 		$from_name = isset( $edd_options['from_name'] ) ? $edd_options['from_name'] : get_bloginfo('name');
 		$from_email = isset( $edd_options['from_email'] ) ? $edd_options['from_email'] : get_option('admin_email');
 
-		$headers = "From: " . stripslashes_deep( html_entity_decode( $from_name, ENT_COMPAT, 'UTF-8' ) ) . " <$from_email>\r\n";
-		$headers .= "Reply-To: ". $from_email . "\r\n";
-		$headers .= "Content-Type: text/html; charset=utf-8\r\n";
-
 		$body = '<p>' . __( "Hello!", "rcp-gifts" ) . '</p>';
 		$body .= '<p>' . sprintf( __( "Someone has gifted you a membership to %s", "rcp-gifts" ), $site_name ) . '</p>';
 		if( ! empty( $gift_message ) && __( 'Enter the a message to send to the recipient', 'rcp-gifts' ) != $gift_message ) {
@@ -92,11 +88,10 @@ class RCP_Gift_Memberships {
 		$body .= '<p>' . sprintf( __( "Enter %s during registration to redeem your gift.", "rcp-gifts" ), $discount->code ) . '</p>';
 		$body .= '<p>' . sprintf( __( "Visit %s to claim your membership gift.", "rcp-gifts" ), '<a href="' . home_url() . '">' . home_url() . '</a>' ) . '</p>';
 
-		$message = edd_get_email_body_header();
-		$message .= edd_apply_email_template( $body, $payment_id );
-		$message .= edd_get_email_body_footer();
-
-		wp_mail( $email, $subject, $message, $headers );
+		$emails = new EDD_Emails;
+		$emails->__set( 'from_address', $from_email );
+		$emails->__set( 'from_name', $from_name );
+		$emails->send( $email, $subject, $body );
 
 	}
 
